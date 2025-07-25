@@ -3,9 +3,11 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from astroidfield import AsteroidField
+from shot import Shot
 
 def main():
 
+    # Initisations
     pygame.init()
     print("Starting Asteroids!")
     print(f"Screen width:", SCREEN_WIDTH)
@@ -15,11 +17,13 @@ def main():
     updatables = pygame.sprite.Group()
     drawables = pygame.sprite.Group()
     astroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     # Group assignment
     Player.containers = (updatables, drawables)
     Asteroid.containers = (astroids, updatables, drawables)
     AsteroidField.containers = (updatables)
+    Shot.containers = (shots, updatables, drawables)
 
     # Instantiation
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -50,6 +54,11 @@ def main():
             if astroid.collision(player):
                 print("Game Over!")
                 return
+        for astroid in astroids:
+            for shot in shots:
+                if astroid.collision(shot):
+                    astroid.split()
+                    shot.kill()
 
         # cap the frame and get delta time in Asteroids
         dt = clock.tick(60) / 1000.0

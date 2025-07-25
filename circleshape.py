@@ -25,3 +25,13 @@ class CircleShape(pygame.sprite.Sprite):
         if self.position.distance_to(other.position) < self.radius + other.radius:
             return True
         return False
+
+
+
+def main():
+    print("Hello from circle shape")
+    circle = CircleShape(100, 100, 50)
+    print(circle.position.x, circle.position.y, circle.radius)
+
+if __name__ == "__main__":
+    main()
